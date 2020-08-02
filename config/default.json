@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://messaging123:messaging123@messaging.oul4k.mongodb.net/Simple_Messaging?retryWrites=true&w=majority",
+  "jwtSecret": "secret"
+}
