@@ -1,14 +1,14 @@
 import React, { useState, useContext } from "react";
-import Errors from "../extras/errors";
+import EaContext from "../extras/errors";
 import aContext from "../../context/auth/aContext";
 
 const Register = () => {
-  const alertcontext = useContext(Errors);
-  const AContext = useContext(aContext);
+  const alertcontext = useContext(EaContext);
+  const aContext = useContext(aContext);
 
-  const { Alert } = Errors;
+  const { Alert } = EaContext;
 
-  const { register } = aContext;
+  const { Register } = aContext;
 
   const [user, newUser] = useState({
     name: "",
@@ -29,7 +29,7 @@ const Register = () => {
     } else if (password !== password2) {
       Alert("Passwords do not match", "danger");
     } else {
-      register({
+      Register({
         name,
         email,
         phone,

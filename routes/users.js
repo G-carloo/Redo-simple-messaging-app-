@@ -26,9 +26,45 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    res.send("passed");
-  }
-);
+    const { name, email, phone, password } = req.body;
+
+    try {
+      let user = await User.findOne({ name })
+
+      if(user) {
+        return res.status(400).json({ msg: 'User already axists' })
+      }
+
+      user = new User({
+        name,
+        email,
+        phone,
+        password
+      })
+
+      const salt = await bcrypt.genSalt(10)
+
+      user.password = await bcrypt.hash(password, salt)
+
+      await user.save();
+
+      const payload = {
+        user: {
+          id: user.id
+        }
+      }
+
+      jwt.sign(payload, config.get('jwtSecret'), {
+        expiresIn: 10000
+      }, (err, token) => {
+        if(err) throw err;
+        res.json({ token })
+      })
+    } catch (err) {
+      console.error(err.msg);
+      res.status(500).send('Server Error')
+    };
+  })
 //   const today = new Date();
 //   const userData = {
 //     name: req.body.name,

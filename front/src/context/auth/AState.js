@@ -12,6 +12,7 @@ import {
   LOGOUT,
   CLEAR_ERRORS,
 } from "../Functions";
+import { response } from "express";
 
 const AState = (props) => {
   const initialState = {
@@ -25,7 +26,7 @@ const AState = (props) => {
   const [state, dispatch] = useReducer(aReducer, initialState);
 
   // Register User
-  const register = async (FormData) => {
+  const Register = async (user) => {
     const web = {
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +34,7 @@ const AState = (props) => {
     };
 
     try {
-      const res = await axios.post("users", FormData, web);
+      const res = await axios.post("/users", user, web);
 
       dispatch({
         type: REGISTER_SUCCESS,
@@ -42,13 +43,24 @@ const AState = (props) => {
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
-        payload: err.response.data.msg,
+        payload: err.res.data.msg,
       });
     }
   };
 
   //Login User
-  const login = () => console.log("LOGIN");
+  const login = async (useri) => {
+    let useri = {
+      name,
+      email,
+      phone,
+      password,
+    };
+
+    try {
+      const user = await axios.post();
+    } catch (err) {}
+  };
 
   // Load User
   const loaduser = () => console.log("loaduser");
@@ -67,7 +79,7 @@ const AState = (props) => {
         loading: state.loading,
         error: state.error,
         user: state.user,
-        register,
+        Register,
         login,
         loaduser,
         logout,
