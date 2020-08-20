@@ -6,7 +6,7 @@ import {
   UPDATE_CONTACT,
   FILTER_CONTACTS,
   CLEAR_FILTER,
-  REGISTER_FAIL,
+  // REGISTER_FAIL,
 } from "../Functions";
 import contactContext from "./cContext";
 

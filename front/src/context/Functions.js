@@ -19,4 +19,5 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const SEND_MESSAGE = "SEND MESSAGE";
-export const GET_MESSAGES = "GET_MESSAGES";
+export const GET_MESSAGE = "GET_MESSAGE";
+export const DELETE_MESSAGE = "DELETE_MESSAGE";

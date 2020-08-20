@@ -6,13 +6,15 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_LOADED,
+  LOGOUT,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT,
   CLEAR_ERRORS,
 } from "../Functions";
 import { response } from "express";
+import Token from "../Authentication/token";
+import { exit } from "process";
 
 const AState = (props) => {
   const initialState = {
@@ -40,6 +42,8 @@ const AState = (props) => {
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
+
+      loaduser();
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
@@ -50,26 +54,52 @@ const AState = (props) => {
 
   //Login User
   const login = async (useri) => {
-    let useri = {
-      name,
-      email,
-      phone,
-      password,
+    const web = {
+      headers: {
+        "Content-Type": "application/json",
+      },
     };
 
     try {
-      const user = await axios.post();
-    } catch (err) {}
+      const res = await axios.post("/", useri, web);
+
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+
+      loaduser();
+    } catch (err) {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
   };
 
   // Load User
-  const loaduser = () => console.log("loaduser");
+  const loaduser = async (token) => {
+    if (localStorage.token) {
+      Token(localStorage.token);
+    }
+
+    try {
+      const res = await axios.get("/authentication");
+
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR });
+    }
+  };
 
   // Logout
-  const logout = () => console.log("logout");
+  const logout = () => dispatch({ type: LOGOUT });
 
   // Clear Errors
-  const clearerrors = () => console.log("clear errors");
+  const clearerrors = () => dispatch({ type: CLEAR_ERRORS });
 
   return (
     <aContext.Provider

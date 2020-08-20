@@ -1,14 +1,25 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import EaContext from "../extras/errors";
 import aContext from "../../context/auth/aContext";
 
-const Register = () => {
+const Register = (props) => {
   const alertcontext = useContext(EaContext);
-  const aContext = useContext(aContext);
+  const authContext = useContext(aContext);
 
   const { Alert } = EaContext;
 
-  const { Register } = aContext;
+  const { Register, error, clearErrors, isAuthenticated } = authContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push("/");
+    }
+
+    if (error === "User already exists") {
+      alert(error);
+      clearErrors();
+    }
+  }, [error, isAuthenticated, props.history]);
 
   const [user, newUser] = useState({
     name: "",

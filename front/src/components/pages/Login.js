@@ -1,6 +1,24 @@
 import React, { useState } from "react";
+import alertContext from '../../context/erroralert/eaContext'
+import aContext from '../../context/auth/aContext'
 
-const Login = () => {
+const Login = (props) => {
+  const alertContext = useContext(EaContext);
+  const aContext = useContext(aContext);
+
+  const { Alert } = EaContext;
+
+  const { Login, error, clearErrors, isAuthenticated } = authContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push("/");
+    }
+
+    if (error === "Invalid Credentials") {
+      alert(error);
+      clearErrors();
+
   const [user, newUser] = useState({
     name: "",
     phone: "",
@@ -13,6 +31,16 @@ const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if (email === "" || phone === "" || password === "" ) {
+      alert("Please fill all the fields..")
+    } else {
+      Login({
+        name,
+        phone,
+        password
+      })
+    }
   };
 
   return (
@@ -27,6 +55,7 @@ const Login = () => {
             value={name}
             onChange={onChange}
             placeholder='Please enter your name'
+            required
           />
         </div>
         <div className='form-group'>
@@ -37,6 +66,7 @@ const Login = () => {
             value={phone}
             onChange={onChange}
             placeholder='Please enter your phone'
+            required
           />
         </div>
         <div className='form-group'>
@@ -47,6 +77,7 @@ const Login = () => {
             value={password}
             onChange={onChange}
             placeholder='Please enter your password'
+            required
           />
         </div>
         <input
@@ -60,3 +91,4 @@ const Login = () => {
 };
 
 export default Login;
+

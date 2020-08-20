@@ -8,14 +8,13 @@ const Moreinfo = () => {
       <p>
         Read more at{" "}
         <Link to='/About' href='#About'>
-          <a href='#About' />
-          About
+          <a href='#About'>About</a>
         </Link>
       </p>
       <p>
         View{" "}
         <Link to='/Contacts' href='#Contacts'>
-          <a href='#Contacts' />, Add or edit Contacts
+          <a href='#Contacts'>, Add or edit Contacts</a>
         </Link>
       </p>
     </div>

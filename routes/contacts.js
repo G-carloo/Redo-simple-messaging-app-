@@ -1,18 +1,19 @@
 const express = require("express");
 const validator = require("express-validator");
 const cors = require("cors");
-const router = express.Router();
+const router = express("Router");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const Contacts = require("../participants/Contacts");
+const Contact = require("../mods/Contacts");
 const { check } = require("express-validator");
 contacts.use(cors());
 
 // Creating/Adding A Contact
 app.post(
   "/",
-  auth, [
+  auth,
+  [
     check("name", "Please enter a name").not().isEmpty(),
     check("phone", "Please enter a phone number").isNumeric.isLength(),
   ],
@@ -35,47 +36,45 @@ app.post(
 
 // Get contacts
 router.get("/:name", auth, async (req, res) => {
-  const contacts = await Contacts
-  .find({ user: req.user.name })
-  .sort({ date: -1 })
+  const contacts = await ContactSchema.find({ user: req.user.name }).sort({
+    date: -1,
+  });
 });
 
 // Update Contact
 router.put("/:name", auth, async (req, res) => {
-  const { name, phone }
+  // const { name, phone }
 
-  let contact = await Contacts.findByName( req.params.name )
+  let contact = await ContactSchema.findByName(req.params.name);
 
-  if(!contact) {
-    res.send(404).json({ msg: "Contact not found" })
+  if (!contact) {
+    res.send(404).json({ msg: "Contact not found" });
   } else {
-    res.json(contact)
+    res.json(contact);
   }
 
-  const contact = await Contacts.findByNameAndUpdate(
+  const contacts = await ContactSchema.findByNameAndUpdate(
     req.params.name,
-    {set: Contact},
-    {new: true}
+    { set: Contact },
+    { new: true }
   );
 
   res.json(contact);
- 
 });
 
 // Delete Contact
-router.delete("/name", auth , (req, res) => {
-  let contacts = await Contacts.findByName(req.params.name)
+router.delete("/name", auth, async (req, res) => {
+  let contacts = await ContactSchema.findByName(req.params.name);
 
-  if(!contact) {
-    res.send(404).json({ msg: "Contact does not exist" })
+  if (!contact) {
+    res.send(404).json({ msg: "Contact does not exist" });
   } else {
-    res.json(contact)
+    res.json(contact);
   }
 
-  const contact = await Contacts.findByName(
-    req.params.name,
-    {delete: Contact},
-  );
+  const contact = await ContactSchema.findByName(req.params.name, {
+    delete: Contact,
+  });
 
-  res.json({ mg: "Contact deleted" })
+  res.json({ mg: "Contact deleted" });
 });

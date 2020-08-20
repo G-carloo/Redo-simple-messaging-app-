@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import ContactContext from "../../context/contact/cContext";
-import { CLEAR_CURRENT } from "../../context/Functions";
+// import { CLEAR_CURRENT } from "../../context/Functions";
 
 const Edit = () => {
   const contactContext = useContext(ContactContext);

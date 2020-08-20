@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import EaContext from "../../context/erroralert/eaContext";
+import React from "react";
+// import EaContext from "../../context/erroralert/eaContext";
 
 const Errors = () => {
-  const alertcontext = useContext(EaContext);
+  // const alertcontext = useContext(EaContext);
 
   return <div></div>;
 };

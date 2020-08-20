@@ -36,7 +36,7 @@
   display: inline-flex;
 }
 
-.sp {
+/* .sp {
   display: inline-flex;
   color: black;
   justify-content: right;
@@ -44,7 +44,7 @@
   width: 25%;
   text-align: center;
   float: right;
-}
+} */
 
 .ul {
   color: black;

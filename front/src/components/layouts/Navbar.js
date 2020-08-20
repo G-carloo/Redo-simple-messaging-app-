@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   CaretUpOutlined,
@@ -7,54 +7,60 @@ import {
   PaperClipOutlined,
   PhoneOutlined,
 } from "@ant-design/icons";
-
-const sp = {
-  display: "inline-flex",
-  color: "black",
-  justifycontent: "right",
-  height: "50px",
-  float: "right",
-  textalign: "center",
-  position: "relative",
-};
+import aContext from "../../context/auth/aContext";
 
 const Navbar = () => {
-  return (
-    <div className='navbar sticky'>
-      <ul>
-        <h1 className='main'>
-          <CaretUpOutlined />
-          Simple Messaging
-        </h1>
-      </ul>
-      <ul className='ul'>
+  const aContext = useContext(aContext);
+
+  const { isAuthenticated, logout, user } = aContext;
+
+  const onLogout = () => {
+    logout();
+  };
+
+  const aLinks = (
+    <Fragment>
+      <h1 className='main'>
+        <CaretUpOutlined />
+        Simple Messaging
+      </h1>
+      <li>Hello {user && user.name}</li>
+      <li>
+        <ul className='ul'>
+          <h2>
+            <Link to='/Messages'>
+              <PaperClipOutlined href='#Messages' />
+            </Link>
+          </h2>
+        </ul>
         <h2>
-          <Link to='/Upload'>
-            <CloudUploadOutlined href='#Up' />
+          <Link to='/Moreinfo'>
+            <MoreOutlined href='#Modal' />
           </Link>
         </h2>
-        <h2>
-          <Link to='/Messages'>
-            <PaperClipOutlined href='#Messages' />
-          </Link>
-        </h2>
-        <h2>
-          <Link to='/Calls'>
-            <PhoneOutlined href='#Calls' />
-          </Link>
-        </h2>
-      </ul>
-      <h2>
-        <Link to='/Moreinfo'>
-          <MoreOutlined href='#Modal' />
-        </Link>
-      </h2>
+        <a href='#!' onClick={onLogout}>
+          <i>
+            <span>Logout</span>
+          </i>
+        </a>
+      </li>
+    </Fragment>
+  );
+
+  const gLinks = (
+    <Fragment>
       <h4>
         <Link to='/register'>Register</Link>
       </h4>
       <h4>
         <Link to='/login'>Login</Link>
-      </h4>
+      </h4>{" "}
+    </Fragment>
+  );
+
+  return (
+    <div className='navbar sticky'>
+      <ul>{isAuthenticated ? aLinks : gLinks}</ul>
     </div>
   );
 };

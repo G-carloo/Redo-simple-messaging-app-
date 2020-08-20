@@ -14,7 +14,7 @@ const Contact = ({ contact }) => {
   };
 
   const onMessage = ({ message }) => {
-    // messageContact(name)
+    // messageContact(message)
     console.log("Message working");
   };
 

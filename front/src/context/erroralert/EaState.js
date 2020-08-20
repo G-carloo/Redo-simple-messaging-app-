@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
-import uuid from "uuid";
-import axios from "axios";
+import { v4 as uuid4 } from "uuid";
+// import axios from "axios";
 import eaContext from "./eaContext";
 import eaReducer from "./eaReducer";
 import { SET_ALERT, REMOVE_ALERT } from "../Functions";
@@ -12,7 +12,7 @@ const EaState = (props) => {
 
   //   Set Alert
   const Alert = (msg, type) => {
-    const id = uuid.v4();
+    const id = uuid4.v4();
     dispatch({
       type: SET_ALERT,
       payload: { msg, type, id },
