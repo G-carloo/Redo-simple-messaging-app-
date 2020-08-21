@@ -53,7 +53,7 @@ const AState = (props) => {
   };
 
   //Login User
-  const login = async (useri) => {
+  const Login = async (useri) => {
     const web = {
       headers: {
         "Content-Type": "application/json",
@@ -110,7 +110,7 @@ const AState = (props) => {
         error: state.error,
         user: state.user,
         Register,
-        login,
+        Login,
         loaduser,
         logout,
         clearerrors,

@@ -2,13 +2,12 @@ import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import aContext from "../../context/auth/aContext";
 
-export const Private = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ component: Component }) => {
   const aContext = useContext(aContext);
   const { isAuthenticated, loading } = aContext;
 
   return (
     <Route>
-      {...rest}
       render=
       {(props) =>
         !isAuthenticated && !loading ? (
@@ -20,3 +19,5 @@ export const Private = ({ component: Component, ...rest }) => {
     </Route>
   );
 };
+
+export default PrivateRoute;

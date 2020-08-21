@@ -5,7 +5,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../mods/User");
-// users.use(cors());
 
 process.env.SECRET_KEY = "secret";
 
@@ -14,7 +13,10 @@ router.post(
   [
     check("name", "Please enter a name").not().isEmpty(),
     check("email", "Please enter a valid email").not().isEmpty().isEmail(),
-    check("phone", "Please enter a phone number").not().isEmpty().isNumeric(),
+    check("phone", "Please enter a phone number")
+      .not()
+      .isEmpty()
+      .isNumeric({ min: 10 }),
     check("password", "Please enter a valid password")
       .not()
       .isEmpty()
@@ -71,40 +73,6 @@ router.post(
     }
   }
 );
-//   const today = new Date();
-//   const userData = {
-//     name: req.body.name,
-//     email: req.body.email,
-//     phone: req.body.phone,
-//     password: req.body.password,
-//     created: today,
-//   };
-
-//   User.findOne({
-//     name: req.body.name,
-//   })
-//     .then((user) => {
-//       if (!user) {
-//         bcrypt.hash(req.body.password, 10, (err, hash) => {
-//           userData.password = hash;
-//           User.create(userData)
-//             .then((user) => {
-//               res.json({ status: user.name + "You have been Registered!" });
-//               await user.save();
-//             })
-//             .catch((err) => {
-//               res.send("error: " + err);
-//             });
-//         });
-//       } else {
-//         res.json({ error: "User already exists" });
-//       }
-//     })
-//     .catch((err) => {
-//       res.send("error: " + err);
-//     });
-// }
-// );
 
 router.post("/login", (req, res) => {
   User.findOne({
@@ -154,3 +122,5 @@ router.get("/profile", (req, res) => {
       res.send("error: " + err);
     });
 });
+
+module.exports = router;

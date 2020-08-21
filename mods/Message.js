@@ -1,18 +1,14 @@
 const mongoose = require("mongoose");
-const { Timestamp } = require("mongodb");
 
-const MessageSchema = mongoose.Schema({
-  user: {
-    type: mongoose.SchemaType,
-    ref: "users",
-  },
+const MessageSchema = new mongoose.Schema({
   message: {
     type: String,
+    required: false,
   },
   time: {
-    type: Timestamp,
-    default: Timestamp.time,
+    type: Date,
+    default: Date.now,
   },
 });
 
-mongoose.model("messages", MessageSchema);
+module.exports = mongoose.model("messages", MessageSchema);

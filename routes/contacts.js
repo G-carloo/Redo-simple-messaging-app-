@@ -4,18 +4,20 @@ const cors = require("cors");
 const router = express("Router");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+// const auth = require("./");
 
 const Contact = require("../mods/Contacts");
 const { check } = require("express-validator");
-contacts.use(cors());
 
 // Creating/Adding A Contact
-app.post(
+router.post(
   "/",
-  auth,
+
   [
     check("name", "Please enter a name").not().isEmpty(),
-    check("phone", "Please enter a phone number").isNumeric.isLength(),
+    check("phone", "Please enter a phone number").isNumeric().isLength({
+      min: 10,
+    }),
   ],
   (req, res) => {
     const Contact = {
@@ -35,14 +37,14 @@ app.post(
 );
 
 // Get contacts
-router.get("/:name", auth, async (req, res) => {
+router.get("/:name", async (req, res) => {
   const contacts = await ContactSchema.find({ user: req.user.name }).sort({
     date: -1,
   });
 });
 
 // Update Contact
-router.put("/:name", auth, async (req, res) => {
+router.put("/:name", async (req, res) => {
   // const { name, phone }
 
   let contact = await ContactSchema.findByName(req.params.name);
@@ -63,7 +65,7 @@ router.put("/:name", auth, async (req, res) => {
 });
 
 // Delete Contact
-router.delete("/name", auth, async (req, res) => {
+router.delete("/name", async (req, res) => {
   let contacts = await ContactSchema.findByName(req.params.name);
 
   if (!contact) {
@@ -78,3 +80,5 @@ router.delete("/name", auth, async (req, res) => {
 
   res.json({ mg: "Contact deleted" });
 });
+
+module.exports = router;
